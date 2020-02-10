@@ -16,17 +16,25 @@ class CC2{
         int counter = 0;
         int between = 0;
         boolean greaterThanOne = false;
+        boolean match = false;
         for(int i = 0; i < arr.length; i++){
             if(counter > 0 && greaterThanOne){
                 if(arr[i] < startingSize){
                     between += arr[i];
                 }
                 if(arr[i] >= startingSize){
+                    match = true; 
                     finishPoss = i;
                     finishSize = arr[i];
                     tWater += ((((finishPoss-1) - startingPoss)*startingSize)- between);
+                    between = 0;
                     counter = 0;
-                    greaterThanOne = false;
+                }
+                if(i == arr.length-1 && match == false){
+                    i = startingPoss+1;
+                    if(startingPoss+1 == arr.length){ break;}
+                    counter = 0;
+                    between = 0;
                 }
             }
             
@@ -38,6 +46,7 @@ class CC2{
             }
 
             if(arr[i] != 0 && counter == 0){
+                match = false;
                 startingPoss = i;
                 startingSize = arr[i];
                 counter++;

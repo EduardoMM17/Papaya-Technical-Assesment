@@ -4,6 +4,22 @@ import java.nio.file.Paths;
 import java.io.*;
 
 public class CC3{
+    static Vector<Student> eliminateDuplicates(Vector<Student> V){
+        Vector<Student> NoDuplicate = new Vector<Student>();    
+        NoDuplicate.add(V.get(0));
+        boolean isDuplicate = false;
+        for(int index = 0; index < V.size(); index++){
+            for(int j = 1; j < NoDuplicate.size(); j++){
+                if(V.get(index) == NoDuplicate.get(j)){
+                    isDuplicate = true;
+                }
+            }
+            if(isDuplicate == false){
+                 NoDuplicate.add(V.get(index));
+            }
+        }
+        return NoDuplicate;
+    } 
     public static void main(String[] args){   
         String fileName = "file.csv";
         File file = new File(fileName);

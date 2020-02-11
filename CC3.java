@@ -7,15 +7,22 @@ public class CC3{
     static Vector<Student> eliminateDuplicates(Vector<Student> V){
         Vector<Student> NoDuplicate = new Vector<Student>();    
         NoDuplicate.add(V.get(0));
+        int dupPoss = 0;
         boolean isDuplicate = false;
         for(int index = 0; index < V.size(); index++){
+            isDuplicate = false;
             for(int j = 1; j < NoDuplicate.size(); j++){
-                if(V.get(index) == NoDuplicate.get(j)){
+                if(V.get(index).UserId == NoDuplicate.get(j).UserId){
                     isDuplicate = true;
+                    dupPoss = j;
                 }
             }
             if(isDuplicate == false){
                  NoDuplicate.add(V.get(index));
+            }
+            if(isDuplicate == true && (V.get(index).Version > NoDuplicate.get(dupPoss).Version)) {
+                NoDuplicate.remove(dupPoss);
+                NoDuplicate.add(V.get(index));    
             }
         }
         return NoDuplicate;

@@ -6,6 +6,8 @@ public class CC3{
         String fileName = "file.csv";
         File file = new File(fileName);
         Vector<Student> students = new Vector<Student>();
+        Set<String> courses = new HashSet<String>();
+        Map<String, Vector<Student>> toFile = new HashMap<String, Vector<Student>>();
         try{
             Scanner inputStream = new Scanner(file);
             inputStream.nextLine();
@@ -23,9 +25,20 @@ public class CC3{
             inputStream.close();
         } catch (FileNotFoundException e){
             e.printStackTrace();
-        }     
-        System.out.println(students.get(1).UserId);
-    } 
+        }    
+        for(int index = 0; index < students.size(); index++){
+            courses.add(students.get(index).CourseMajor);
+        }
+        for(String course : courses){
+            Vector<Student> stuForEachC = new Vector<Student>();
+            for(int i = 0; i < students.size(); i++){
+                if(course == students.get(i).CourseMajor){
+                    stuForEachC.add(students.get(i));                    
+                }
+            }
+            toFile.put(course, stuForEachC);
+        }
+    }
 }
 
 class Student{

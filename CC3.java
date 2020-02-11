@@ -1,4 +1,6 @@
 import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.*;
 
 public class CC3{
@@ -37,6 +39,17 @@ public class CC3{
                 }
             }
             toFile.put(course, stuForEachC);
+        }
+        for(String course : courses){
+            String path = course+".csv";
+            try{
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(path)); 
+            writer.write("USERID,F&LName,Version,CM");
+            writer.newLine();
+            writer.close();
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
         }
     }
 }

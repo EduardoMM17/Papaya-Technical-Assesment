@@ -27,6 +27,11 @@ public class CC3{
         }
         return NoDuplicate;
     } 
+
+    static void quickSort(Vector<Student> V){
+        
+    }
+    
     public static void main(String[] args){   
         String fileName = "file.csv";
         File file = new File(fileName);
@@ -37,11 +42,32 @@ public class CC3{
             Scanner inputStream = new Scanner(file);
             inputStream.nextLine();
             while (inputStream.hasNextLine()){
+                int midPoss = 0;
+                boolean midFound = false;
+                boolean nameDone = false;
                 Student student = new Student();
                 String data = inputStream.nextLine();
                 String[] values = data.split(",");
                 student.UserId = values[0];
-                student.FirstAndLastName = values[1];
+                String Name = values[1];
+                for(int i = 0; i < Name.length(); i++){
+                    if(midFound){
+                        student.FirstName += Name.charAt(i);
+                        if(i == midPoss -1){
+                            nameDone = true;
+                            midFound = false;
+                            i = midPoss+1;
+                        }
+                    }
+                    if(nameDone){
+                        student.LastName += Name.charAt(i);
+                    }
+                    if(Name.charAt(i) == ' '){
+                        midPoss = i;
+                        midFound = true;
+                        i = 0;
+                    }
+                }
                 String SVersion = values[2];
                 student.Version = Integer.parseInt(SVersion);
                 student.CourseMajor = values[3];
@@ -79,7 +105,8 @@ public class CC3{
 
 class Student{
     String UserId;
-    String FirstAndLastName;
+    String FirstName;
+    String LastName;
     int Version;
     String CourseMajor;
 }

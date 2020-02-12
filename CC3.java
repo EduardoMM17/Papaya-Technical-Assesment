@@ -4,6 +4,27 @@ import java.nio.file.Paths;
 import java.io.*;
 
 public class CC3{
+    static boolean areTheSame(String one, String two){
+        int count = 0;
+        int size = 0;
+        if(one.length() < two.length()){
+            size = one.length();
+        }
+        else{
+            size = two.length();
+        }
+        for(int i = 0; i < size; i++){
+            if(one.charAt(i) == two.charAt(i)){
+                count++;
+            }
+        }
+        if(count == one.length() && count == two.length()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     static Vector<Student> eliminateDuplicates(Vector<Student> V){
         Vector<Student> NoDuplicate = new Vector<Student>();    
         NoDuplicate.add(V.get(0));
@@ -72,25 +93,43 @@ public class CC3{
             inputStream.close();
         } catch (FileNotFoundException e){
             e.printStackTrace();
-        }    
+        }
         for(int index = 0; index < students.size(); index++){
             courses.add(students.get(index).CourseMajor);
         }
+        quickSort qSort = new quickSort();
         for(String course : courses){
             Vector<Student> stuForEachC = new Vector<Student>();
             for(int i = 0; i < students.size(); i++){
-                if(course == students.get(i).CourseMajor){
+                if(areTheSame(course,students.get(i).CourseMajor)){
                     stuForEachC.add(students.get(i));                    
                 }
             }
+            eliminateDuplicates(stuForEachC);
+            qSort.sort(stuForEachC,0,stuForEachC.size()-1);
             toFile.put(course, stuForEachC);
         }
+        Set<String> keys = toFile.keySet();
         for(String course : courses){
             String path = course+".csv";
             try{
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(path)); 
             writer.write("USERID,F&LName,Version,CM");
             writer.newLine();
+            for(String k : keys){
+                if(k == course){
+                    for(int i = 0; i < toFile.get(course).size();i++){
+                        writer.write(toFile.get(course).get(i).UserId);
+                        writer.write(",");
+                        writer.write(toFile.get(course).get(i).FirstName + " " + toFile.get(course).get(i).LastName);
+                        writer.write(",");
+                        writer.write(toFile.get(course).get(i).Version);
+                        writer.write(",");
+                        writer.write(toFile.get(course).get(i).CourseMajor);
+                        writer.newLine();
+                    }
+                }
+            }
             writer.close();
             }catch(IOException ex){
                 ex.printStackTrace();
@@ -112,6 +151,12 @@ class quickSort{
         Student pivot = V.get(high);
         int i = low-1;
         for(int j = low; j < high; j++){
+            if(V.get(j).LastName.charAt(0) == pivot.LastName.charAt(0)){
+                if(V.get(j).FirstName.charAt(0) < pivot.LastName.charAt(0)){
+                    i++;
+                    Collections.swap(V,i,j);
+                }
+            }
             if(V.get(j).LastName.charAt(0) < pivot.LastName.charAt(0)){
                 i++;
                 Collections.swap(V,i,j);

@@ -82,7 +82,7 @@ public class CC3{
                     if(Name.charAt(i) == ' '){
                         midPoss = i;
                         midFound = true;
-                        i = 0;
+                        i = -1;
                     }
                 }
                 String SVersion = values[2];
@@ -123,7 +123,8 @@ public class CC3{
                         writer.write(",");
                         writer.write(toFile.get(course).get(i).FirstName + " " + toFile.get(course).get(i).LastName);
                         writer.write(",");
-                        writer.write(toFile.get(course).get(i).Version);
+                        String Ver = Integer.toString(toFile.get(course).get(i).Version);
+                        writer.write(Ver);
                         writer.write(",");
                         writer.write(toFile.get(course).get(i).CourseMajor);
                         writer.newLine();
@@ -140,8 +141,8 @@ public class CC3{
 
 class Student{
     String UserId;
-    String FirstName;
-    String LastName;
+    String FirstName = "";
+    String LastName = "";
     int Version;
     String CourseMajor;
 }

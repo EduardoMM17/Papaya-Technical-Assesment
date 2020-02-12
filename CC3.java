@@ -28,10 +28,6 @@ public class CC3{
         return NoDuplicate;
     } 
 
-    static void quickSort(Vector<Student> V){
-        
-    }
-    
     public static void main(String[] args){   
         String fileName = "file.csv";
         File file = new File(fileName);
@@ -110,3 +106,42 @@ class Student{
     int Version;
     String CourseMajor;
 }
+
+class quickSort{
+    int partition(Vector<Student> V, int low, int high){
+        Student pivot = V.get(high);
+        int i = low-1;
+        for(int j = low; j < high; j++){
+            if(V.get(j).LastName.charAt(0) < pivot.LastName.charAt(0)){
+                i++;
+                Collections.swap(V,i,j);
+            }
+        }
+        Collections.swap(V,i+1,high);
+        return i+1;
+    }
+    
+    void sort(Vector<Student> V, int low, int high){
+        if(low < high){
+            int pi = partition(V, low, high);
+            sort(V, low, pi -1);
+            sort(V, pi+1,high);
+        }
+    }    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
